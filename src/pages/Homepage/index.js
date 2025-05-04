@@ -1,10 +1,10 @@
 import React from 'react';
+import { Timeline } from '../../components/Timeline';
 
 export const HomePage = () => {
     return (
         <div>
-            {/* Conteúdo da div */}
-            Eduardo
+            <Timeline />
         </div>
     );
 };

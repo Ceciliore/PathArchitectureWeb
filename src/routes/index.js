@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'
-import { HomePage } from '../pages/homepage';
-import { Header } from '../components/header';
+import { HomePage } from '../pages/Homepage';
+import { Header } from '../components/Header';
 
 export const Router = () => {
     return (

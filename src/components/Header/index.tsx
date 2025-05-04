@@ -1,4 +1,5 @@
 import image from '../../assets/imgs/logo-branco.png'
+
 import * as S from './styles'
 
 
