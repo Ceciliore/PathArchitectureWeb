@@ -1,3 +1,4 @@
+import { LectureContainer } from '../LectureContainer'
 import * as S from './styles'
 
 
@@ -5,7 +6,7 @@ export const Timeline = () => {
     return (
         <S.TimelineContainer>
             <S.TimelineContent>
-                morango
+                <LectureContainer />
             </S.TimelineContent>
         </S.TimelineContainer>
     )
