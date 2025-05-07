@@ -10,6 +10,7 @@ export const HeaderContainer = styled.div`
 `;
 
 export const LeftContentHeader = styled.div`
+    cursor: pointer;
     h1 {
         color: white;
         font-size: 25px;
@@ -23,11 +24,11 @@ export const MiddleContentHeader = styled.div`
     }
 `;
 
-export const RightContentHeader = styled.div`
+export const RightContainerHeader = styled.div`
     display: flex;
     align-items: center;
     border-radius: 16px;
-    padding: 16px;
+    gap: 8px;
     cursor: pointer;
 
     span {
@@ -38,7 +39,29 @@ export const RightContentHeader = styled.div`
         line-height: 120%;
         letter-spacing: -0.3px;
     }
+
+`;
+
+export const RightContentHeader = styled.div`
+    display: flex;
+    align-items: center;
+    border-radius: 16px;
+    padding: 12px;
+    cursor: pointer;
+
     
+    &:hover{
+        background-color: #0f4098;
+    }
+`;
+
+export const RightContentHeaderCreateLecture = styled.div`
+    display: flex;
+    align-items: center;
+    border-radius: 16px;
+    padding: 12px;
+    cursor: pointer;
+
     &:hover{
         background-color: #0f4098;
     }
