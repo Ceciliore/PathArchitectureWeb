@@ -22,7 +22,7 @@ export const Header = () => {
                 </h1>
             </S.MiddleContentHeader>
             <S.RightContainerHeader>
-                <S.RightContentHeaderCreateLecture>
+                <S.RightContentHeaderCreateLecture onClick={() => {}}>
                     <span>
                         Criar palestra
                     </span>
