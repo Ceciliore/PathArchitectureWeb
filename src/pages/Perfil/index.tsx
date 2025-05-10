@@ -1,8 +1,9 @@
 import React from 'react';
 import { Image } from 'antd';
 import perfilUsuario from '../../assets/imgs/perfil-usuario.png';
-import * as S from './styles'
 import { LectureContainer } from '../../components/LectureContainer';
+
+import * as S from './styles'
 
 
 export const PerfilPage = () => {
