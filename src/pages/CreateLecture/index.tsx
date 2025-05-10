@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Modal } from 'antd';
+import { Button, message, Modal } from 'antd';
 import { useForm, SubmitHandler } from "react-hook-form";
+import axios from 'axios';
 
 import * as S from './styles'
 
@@ -11,21 +12,41 @@ type Inputs = {
     palestrante: string,
     horas: any
 };
+type CreateLectureProps = {
+    open: boolean;
+    setOpen: (open: boolean) => void;
+};
 
-export const CreateLecture = () => {
+export const CreateLecture = ({ open, setOpen }: CreateLectureProps) => {
+
     const {
         register,
         handleSubmit,
+        reset
     } = useForm<Inputs>();
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
-        console.log(data)
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        try {
+            await axios.post('/api/cria_palestras', {
+                nome: data.titulo,
+                local: data.local,
+                palestrante: data.palestrante,
+                horario: data.horas
+            });
+
+            message.success('Palestra registrada com sucesso!');
+            reset();
+        } catch (error) {
+            console.error(error);
+            message.error('Erro ao registrar palestra');
+        }
     };
 
     return (
         <Modal
             title="Criar palestra"
-            open={true}
+            open={open}
+            onCancel={() => setOpen(false)}
             footer={
                 <Button
                     htmlType="submit"
