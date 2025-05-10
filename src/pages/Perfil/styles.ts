@@ -46,7 +46,8 @@ export const PerfilTopInsideInformationContent = styled.div`
 `;
 
 export const PerfilLectureHistoricContent = styled.div`
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     flex-direction: column;
     gap: 16px;
     background-color: #fff;

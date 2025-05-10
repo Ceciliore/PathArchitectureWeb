@@ -19,7 +19,7 @@ export const PerfilPage = () => {
                         <h1>Eduardo Andrade Torres Junior</h1>
                         <S.PerfilTopInsideInformationContent>
                             <span>
-                                Matricula: 15798321938
+                                Matricula: 2021771SINF
                             </span>
                             <span>
                                 Estudante Bacharelado
@@ -41,10 +41,10 @@ export const PerfilPage = () => {
                         </S.PerfilTopInsideInformationContent>
                     </S.PerfilTopContent>
                 </S.PerfilContent>
-                <S.PerfilLectureHistoricContent>
                     <div>
                         <h1>Historico de palestras</h1>
                     </div>
+                <S.PerfilLectureHistoricContent>
                     <LectureContainer />
                 </S.PerfilLectureHistoricContent>
 
