@@ -4,6 +4,7 @@ import { HomePage } from '../pages/Homepage';
 import { Header } from '../components/Header';
 import { PerfilPage } from '../pages/Perfil';
 import { LectureDetail } from '../pages/LectureDetail';
+import { Login } from '../pages/Login';
 
 export const Router = () => {
     return (
@@ -25,6 +26,10 @@ export const Router = () => {
                 <Route
                     path="/palestra/:id"
                     element={<LectureDetail />}
+                />
+                <Route
+                    path="/login"
+                    element={<Login></Login>}
                 />
             </Routes>
         </>

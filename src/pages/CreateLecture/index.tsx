@@ -10,7 +10,8 @@ type Inputs = {
     titulo: string,
     local: string,
     palestrante: string,
-    horas: any
+    data: string,
+    horas: string
 };
 type CreateLectureProps = {
     open: boolean;
@@ -27,10 +28,11 @@ export const CreateLecture = ({ open, setOpen }: CreateLectureProps) => {
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         try {
-            await axios.post('/api/cria_palestras', {
-                nome: data.titulo,
+            await axios.post(`${process.env.REACT_APP_API}/api/palestras`, {
+                titulo: data.titulo,
                 local: data.local,
                 palestrante: data.palestrante,
+                data: data.data,
                 horario: data.horas
             });
 
@@ -76,6 +78,12 @@ export const CreateLecture = ({ open, setOpen }: CreateLectureProps) => {
                         Palestrante
                     </span>
                     <S.InputLecture placeholder="Nome do palestrante" {...register("palestrante")} />
+                </S.InputStringLecture>
+                <S.InputStringLecture>
+                    <span>
+                        Data
+                    </span>
+                    <S.InputLecture placeholder="Dia da palestra" {...register("data")} />
                 </S.InputStringLecture>
                 <S.InputStringLecture>
                     <span>
