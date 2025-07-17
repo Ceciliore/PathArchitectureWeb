@@ -7,7 +7,7 @@ export const HomePage = () => {
     return (
         <S.HomepageContainer>
             <S.HomepageContent>
-                <LectureContainer></LectureContainer>
+                <LectureContainer />
             </S.HomepageContent>
         </S.HomepageContainer>
     );

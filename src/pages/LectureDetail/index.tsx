@@ -22,38 +22,58 @@ export const LectureDetail = () => {
     const { id } = useParams();
     const palestra = location.state;
 
+    const [usuarios, setUsuarios] = useState<{ id: number, nome: string }[]>([]);
     const [comentarios, setComentarios] = useState<Comentario[]>([]);
 
     const [novoComentario, setNovoComentario] = useState('');
 
     const fetchComentarios = async () => {
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API}/api/comentarios?palestra=${id}`);
-            setComentarios(res.data);
+            const res = await axios.get(`${process.env.REACT_APP_API}/api/comentarios`);
+            const comentariosDaPalestra = res.data.filter((c: Comentario) => String(c.idPalestra) === id);
+            setComentarios(comentariosDaPalestra);
         } catch (err) {
             console.error('Erro ao buscar comentários:', err);
         }
     };
 
-    const enviarComentario = async () => {
-        if (!novoComentario.trim()) return;
-
+    const fetchUsuarios = async () => {
         try {
-            await axios.post(`${process.env.REACT_APP_API}/api/comentarios`, {
-                conteudo: novoComentario,
-                idUsuario: 1,
-                idPalestra: id
-            });
-
-            setNovoComentario('');
-            fetchComentarios();
+            const res = await axios.get(`${process.env.REACT_APP_API}/api/usuarios`);
+            setUsuarios(res.data); // supondo que retorna [{id, nome}, ...]
         } catch (err) {
-            console.error('Erro ao enviar comentário:', err);
+            console.error('Erro ao buscar usuários:', err);
         }
     };
 
+    const enviarComentario = async () => {
+        if (!novoComentario.trim()) return;
+    
+        const usuario = JSON.parse(localStorage.getItem('usuarioLogado') || '{}');
+        console.log(usuario)
+        try {
+            await axios.post(`${process.env.REACT_APP_API}/api/comentarios`, {
+                conteudo: novoComentario,
+                idUsuario: usuario.id,
+                idPalestra: id
+            });
+    
+            await axios.post(`${process.env.REACT_APP_API}/api/presencas`, {
+                idUsuario: usuario.id,
+                idPalestra: id
+            });
+    
+            setNovoComentario('');
+            fetchComentarios();
+        } catch (err: any) {
+            console.error('Erro ao enviar comentário ou marcar presença:', err);
+        }
+    };
+    
+
     useEffect(() => {
         fetchComentarios();
+        fetchUsuarios();
     }, [id]);
 
     return (
@@ -81,12 +101,15 @@ export const LectureDetail = () => {
 
             <div style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid #ccc', padding: '1rem', marginBottom: '1rem', borderRadius: '8px' }}>
                 {comentarios.length > 0 ? (
-                    comentarios.map((comentario) => (
-                        <div key={comentario.id} style={{ marginBottom: '1rem', backgroundColor: '#f5f5f5', padding: '0.5rem', borderRadius: '6px' }}>
-                            <strong>{comentario.Usuario?.nome || comentario.usuario?.nome  || `Usuário ${comentario.idUsuario}`}</strong>
-                            <p style={{ margin: 0 }}>{comentario.conteudo}</p>
-                        </div>
-                    ))
+                    comentarios.map((comentario) => {
+                        const usuario = usuarios.find(u => u.id === comentario.idUsuario);
+                        return (
+                            <div key={comentario.id} style={{ marginBottom: '1rem', backgroundColor: '#f5f5f5', padding: '0.5rem', borderRadius: '6px' }}>
+                                <strong>{usuario?.nome || `Usuário ${comentario.idUsuario}`}</strong>
+                                <p style={{ margin: 0 }}>{comentario.conteudo}</p>
+                            </div>
+                        );
+                    })
                 ) : (
                     <p>Nenhum comentário ainda.</p>
                 )}

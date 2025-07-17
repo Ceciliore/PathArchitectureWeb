@@ -10,6 +10,7 @@ export const PerfilContainer = styled.div`
 
 export const PerfilContent = styled.div`
     display: flex;
+    justify-content: space-between;
     gap: 49px;
     background-color: #fff;
     padding: 16px;
@@ -62,5 +63,27 @@ export const PerfilLectureHistoricContent = styled.div`
         line-height: 120%;
         letter-spacing: -0.02em;
         margin: 8px 0px;
+    }
+`;
+
+export const LogoutButtonPerfil = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 8px;
+    width: 57px;
+    padding: 16px;
+    height: 10px;
+    background-color: rgb(180 180 180);
+    color: #FFF;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    &:hover{
+        background-color: #E6171E;
+        color: #fff;
+        transition: all 0.35s ease-in-out;
     }
 `;
