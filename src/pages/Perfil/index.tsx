@@ -57,13 +57,10 @@ export const PerfilPage = () => {
                     </S.LogoutButtonPerfil>
                 </S.PerfilContent>
 
-                <div>
-                    <h1>Histórico de palestras</h1>
-                </div>
-
-                <S.PerfilLectureHistoricContent>
-                    <LectureContainer onlyUser />
-                </S.PerfilLectureHistoricContent>
+                <LectureContainer
+                    onlyUser
+                    title="Histórico de Presença"
+                />
             </S.PerfilContainer>
         </div>
     );

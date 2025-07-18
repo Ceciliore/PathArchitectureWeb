@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import useRouter from '../../hooks/useRouter';
 import { getUsuarioLogado } from '../../utils/auth';
+import { HiArrowCircleRight } from "react-icons/hi";
 import * as S from './styles';
 
 type Palestra = {
@@ -10,17 +11,15 @@ type Palestra = {
     palestrante: string;
     local: string;
     horario: string;
-};
-
-type Presenca = {
-    palestraId: number;
+    data: string;
 };
 
 type LectureContainerProps = {
     onlyUser?: boolean;
+    title?: string;
 };
 
-export const LectureContainer = ({ onlyUser = false }: LectureContainerProps) => {
+export const LectureContainer = ({ title, onlyUser = false }: LectureContainerProps) => {
     const [palestras, setPalestras] = useState<Palestra[]>([]);
     const { push } = useRouter();
 
@@ -59,22 +58,28 @@ export const LectureContainer = ({ onlyUser = false }: LectureContainerProps) =>
     }, [onlyUser, push]);
 
     return (
-        <>
-            {palestras.map((palestra) => (
-                <S.LectureContainer
-                    key={palestra.id}
-                    onClick={() => push(`/palestra/${palestra.id}`, { state: palestra })}
-                >
-                    <S.LectureLeftContent>
-                        <span>{palestra.horario}</span>
-                    </S.LectureLeftContent>
-                    <S.LectureMiddleContent>
-                        <div><span>{palestra.titulo}</span></div>
-                        <div><span>{palestra.palestrante}</span></div>
-                        <div><span>{palestra.local}</span></div>
-                    </S.LectureMiddleContent>
-                </S.LectureContainer>
+        <S.NewLectureContainer onlyUser={onlyUser}>
+            <div>
+                <span>{title}</span>
+            </div>
+
+            {palestras.map((palestra, idx) => (
+                <S.NewLectureContent key={idx} onClick={() => push(`/palestra/${palestra.id}`, { state: palestra })}>
+                    <S.NewLectureLeftContent>
+                        <S.NewLectureHourLeftContent>
+                            {palestra.horario}
+                        </S.NewLectureHourLeftContent>
+                        <S.NewLectureStringLeftContent>
+                            <h4>{palestra.titulo}</h4>
+                            <h5>{palestra.palestrante}</h5>
+                            <h5>{palestra.data}</h5>
+                        </S.NewLectureStringLeftContent>
+                    </S.NewLectureLeftContent>
+                    <S.NewLectureStringLeftContent>
+                        <HiArrowCircleRight size={20} color="#000" />
+                    </S.NewLectureStringLeftContent>
+                </S.NewLectureContent>
             ))}
-        </>
+        </S.NewLectureContainer>
     );
 };
