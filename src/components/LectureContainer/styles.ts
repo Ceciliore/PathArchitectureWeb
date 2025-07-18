@@ -102,7 +102,7 @@ export const NewLectureStringLeftContent = styled.div`
     }
     h5{
         margin: 0;
-        color: #a7a9ab;
+        color: rgb(118, 127, 141);
         font-size: 14px;
     }
 `;
