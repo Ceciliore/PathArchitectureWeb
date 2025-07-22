@@ -88,9 +88,8 @@ export const SubmitButton = styled.button`
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s;
 
     &:hover {
-    background: linear-gradient(to right, #3e67b1, #3e67b1);
+        background: #95a5c1;
     }
 `;

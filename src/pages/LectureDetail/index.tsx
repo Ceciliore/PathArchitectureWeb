@@ -4,6 +4,8 @@ import axios from 'axios';
 import foto1 from '../../assets/imgs/foto1.png';
 import foto2 from '../../assets/imgs/foto2.png';
 import { Button, Carousel, Input, Space } from 'antd';
+import * as S from './styles';
+
 
 type Comentario = {
     id: number;
@@ -92,8 +94,8 @@ export const LectureDetail = () => {
 
     return (
         <div style={{ padding: '2rem', maxWidth: '600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <div style={{ backgroundColor: '#f3f3f3', padding: '1rem', marginBottom: '1rem', borderRadius: '8px' }}>
-                <h2 style={{margin: '0'}}>{palestra.titulo}</h2>
+            <S.PerfilLeftContainer >
+                <h2 style={{ margin: '0' }}>{palestra.titulo}</h2>
 
                 <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>{palestra.nome}</h1>
                 <div style={{ marginBottom: '1rem' }}>
@@ -119,7 +121,7 @@ export const LectureDetail = () => {
                     </div>
                 </Carousel>
 
-            </div>
+            </S.PerfilLeftContainer>
             <div style={{ backgroundColor: '#f3f3f3', padding: '1rem', borderRadius: '8px' }}>
 
                 <h2>Comentários</h2>
