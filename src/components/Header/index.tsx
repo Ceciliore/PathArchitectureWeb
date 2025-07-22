@@ -3,6 +3,7 @@ import image from '../../assets/imgs/logo-branco.png'
 import useRouter from '../../hooks/useRouter'
 import { CreateLecture } from '../../pages/CreateLecture'
 import { useLocation } from 'react-router-dom';
+import { getUsuarioLogado } from '../../utils/auth';
 
 import * as S from './styles'
 
@@ -40,7 +41,7 @@ export const Header = () => {
                         </S.RightContentHeaderCreateLecture>
                         <S.RightContentHeader onClick={() => { push('/perfil') }}>
                             <span>
-                                Olá, Eduardo Torres
+                                Olá, {getUsuarioLogado()?.nome}
                             </span>
                         </S.RightContentHeader>
                     </S.RightContainerHeader>

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import * as S from './styles';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+import * as S from './styles';
 
 type Inputs = {
     nome?: string;
@@ -14,7 +16,10 @@ type Inputs = {
 };
 
 export const Login = () => {
+    const navigate = useNavigate();
     const [isSignUp, setIsSignUp] = useState(false);
+    const [isAluno, setIsAluno] = useState(true);
+    const [messageApi, contextHolder] = message.useMessage();
 
     const {
         register,
@@ -27,7 +32,7 @@ export const Login = () => {
         try {
             if (isSignUp) {
                 if (data.senha !== data.confirmPassword) {
-                    message.warning("As senhas não coincidem.");
+                    messageApi.warning("As senhas não coincidem.");
                     return;
                 }
 
@@ -36,27 +41,35 @@ export const Login = () => {
                     matricula: data.matricula,
                     email: data.email,
                     senha: data.senha,
-                    idPerfil: 2
+                    idPerfil: isAluno ? 2 : 1
                 });
-
-                message.success('Usuário cadastrado com sucesso!');
+                setIsSignUp(false)
+                messageApi.success('Usuário cadastrado com sucesso!');
             } else {
-                await axios.patch(`${process.env.REACT_APP_API}/api/usuarios`, {
+                const response = await axios.patch(`${process.env.REACT_APP_API}/api/usuarios`, {
                     identificador: data.identificador,
                     senha: data.senha,
                 });
 
-                message.success('Login realizado com sucesso!');
+                localStorage.setItem('usuarioLogado', JSON.stringify(response.data.usuario));
+                messageApi.success('Login realizado com sucesso!');
+                navigate('/');
             }
 
             reset();
-        } catch (error: any) {
-            console.error(error);
-            message.error(error.response?.data?.erro || 'Erro ao processar a solicitação');
+        } catch (err: any) {
+            if (axios.isAxiosError(err) && err.response) {
+                const backendMsg = err.response.data?.erro || 'Erro ao fazer login';
+                messageApi.error(backendMsg);
+            } else {
+                messageApi.error('Erro inesperado ao tentar fazer login.');
+            }
         }
     };
 
     return (
+        <>
+            {contextHolder}
         <S.LoginContainer>
             <S.FormBox>
                 <S.ToggleButtons>
@@ -84,7 +97,7 @@ export const Login = () => {
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     {isSignUp ? (
-                        <>
+                        <S.InputsUser>
                             <S.InputGroup>
                                 <label>Nome completo</label>
                                 <input type="text" {...register('nome', { required: true })} placeholder="Digite seu nome" />
@@ -109,9 +122,18 @@ export const Login = () => {
                                 <label>Confirmar senha</label>
                                 <input type="password" {...register('confirmPassword', { required: true })} placeholder="Confirme sua senha" />
                             </S.InputGroup>
-                        </>
+
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={isAluno}
+                                    onChange={(e) => setIsAluno(e.target.checked)}
+                                />
+                                Sou aluno
+                            </label>
+                        </S.InputsUser>
                     ) : (
-                        <>
+                        <S.InputsUser>
                             <S.InputGroup>
                                 <label>Email ou Matrícula</label>
                                 <input type="text" {...register('identificador', { required: true })} placeholder="Digite seu email ou matrícula" />
@@ -121,7 +143,7 @@ export const Login = () => {
                                 <label>Senha</label>
                                 <input type="password" {...register('senha', { required: true })} placeholder="Digite sua senha" />
                             </S.InputGroup>
-                        </>
+                        </S.InputsUser>
                     )}
 
                     <S.SubmitButton type="submit">
@@ -129,6 +151,8 @@ export const Login = () => {
                     </S.SubmitButton>
                 </form>
             </S.FormBox>
-        </S.LoginContainer>
+            </S.LoginContainer>
+        </>
+            
     );
 };

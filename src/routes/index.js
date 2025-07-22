@@ -29,7 +29,7 @@ export const Router = () => {
                 />
                 <Route
                     path="/login"
-                    element={<Login></Login>}
+                    element={<Login/>}
                 />
             </Routes>
         </>

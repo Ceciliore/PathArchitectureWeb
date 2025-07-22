@@ -7,6 +7,15 @@ export const LoginContainer = styled.div`
     height: calc(100vh - 90px);
 `;
 
+export const InputsUser = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    gap: 8px;
+`;
+
 export const FormBox = styled.div`
     background: white;
     padding: 2rem;
@@ -43,6 +52,7 @@ export const ToggleButtons = styled.div`
 export const InputGroup = styled.div`
     display: flex;
     flex-direction: column;
+    width: 100%;
 
     label {
         margin-bottom: 0.3rem;
@@ -51,7 +61,6 @@ export const InputGroup = styled.div`
     }
 
     input {
-        width: 100%;
         padding: 0.6rem;
         border: 1px solid #ddd;
         border-radius: 8px;
@@ -79,9 +88,8 @@ export const SubmitButton = styled.button`
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s;
 
     &:hover {
-    background: linear-gradient(to right, #3e67b1, #3e67b1);
+        background: #95a5c1;
     }
 `;

@@ -1,54 +1,66 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Image } from 'antd';
 import perfilUsuario from '../../assets/imgs/perfil-usuario.png';
 import { LectureContainer } from '../../components/LectureContainer';
-
-import * as S from './styles'
-
+import { getUsuarioLogado, logout } from '../../utils/auth';
+import { HiOutlineLogout } from "react-icons/hi";
+import * as S from './styles';
 
 export const PerfilPage = () => {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
+
     return (
         <div>
             <S.PerfilContainer>
                 <S.PerfilContent>
-                    <Image
-                        width={255}
-                        src={perfilUsuario}
-                        style={{ borderRadius: '50%' }}
-                    />
-                    <S.PerfilTopContent>
-                        <h1>Eduardo Andrade Torres Junior</h1>
-                        <S.PerfilTopInsideInformationContent>
-                            <span>
-                                Matricula: 2021771SINF
-                            </span>
-                            <span>
-                                Estudante Bacharelado
-                            </span>
-                        </S.PerfilTopInsideInformationContent>
-                        <S.PerfilTopInsideInformationContent>
-
-                            <span>
-                                Instituição: CEFET/RJ - Campus Maria da Graça
-                            </span>
-                        </S.PerfilTopInsideInformationContent>
-                        <S.PerfilTopInsideInformationContent>
-                            <span>
-                                Curso: Sistemas de Informação
-                            </span>
-                            <span>
-                                Email: eduardo.torres@cefet-rj.br
-                            </span>
-                        </S.PerfilTopInsideInformationContent>
-                    </S.PerfilTopContent>
-                </S.PerfilContent>
-                    <div>
-                        <h1>Historico de palestras</h1>
+                    <div style={{ display: 'flex', gap: '24px' }}>
+                        <Image
+                            width={255}
+                            src={perfilUsuario}
+                            style={{ borderRadius: '50%' }}
+                        />
+                        <S.PerfilTopContent>
+                            <h1>{getUsuarioLogado()?.nome}</h1>
+                            <S.PerfilTopInsideInformationContent>
+                                <span>
+                                    Matricula: {getUsuarioLogado().matricula}
+                                </span>
+                                <span>
+                                    Estudante Bacharelado
+                                </span>
+                            </S.PerfilTopInsideInformationContent>
+                            <S.PerfilTopInsideInformationContent>
+                                <span>
+                                    Instituição: CEFET/RJ - Campus Maria da Graça
+                                </span>
+                            </S.PerfilTopInsideInformationContent>
+                            <S.PerfilTopInsideInformationContent>
+                                <span>
+                                    Curso: Sistemas de Informação
+                                </span>
+                                <span>
+                                    Email: {getUsuarioLogado().email}
+                                </span>
+                            </S.PerfilTopInsideInformationContent>
+                        </S.PerfilTopContent>
                     </div>
-                <S.PerfilLectureHistoricContent>
-                    <LectureContainer />
-                </S.PerfilLectureHistoricContent>
 
+                    <S.LogoutButtonPerfil onClick={handleLogout}>
+                        <HiOutlineLogout size={20} color="#fff" />
+                        Sair
+                    </S.LogoutButtonPerfil>
+                </S.PerfilContent>
+
+                <LectureContainer
+                    onlyUser
+                    title="Histórico de Presença"
+                />
             </S.PerfilContainer>
         </div>
     );
